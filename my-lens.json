@@ -1,0 +1,42 @@
+
+{
+  "resourceType": "Library",
+  "meta": {
+    "profile": [ "http://hl7.eu/fhir/ig/gravitate-health/StructureDefinition/lens" ]
+  },
+  "extension": [
+    {
+      "url": "http://hl7.eu/fhir/ig/gravitate-health/StructureDefinition/lee-version",
+      "valueString": "0.0.1" 
+    }
+  ],
+  "identifier": [ 
+    {
+      "system": "http://gravitate-health.lst.tfo.upm.es",
+      "value": "my-lens" 
+    }
+  ],
+  "version": "1.0.0", 
+  "name": "MyLens",
+  "title": "My Warning Lens", 
+  "status": "active", 
+  "type": { 
+    "coding": [
+      {
+        "code": "logical-library" 
+      }
+    ]
+  },
+  "publisher": "Gravitate Health Team", 
+  "description": "This lens highlights sections related to my specific risk/safety, based on a patient's gender and age.", 
+  "purpose": "To improve patient safety and understanding of medicinal risks by emphasizing relevant text.", 
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "display": "European Union" 
+        }
+      ]
+    }
+  ]
+}
