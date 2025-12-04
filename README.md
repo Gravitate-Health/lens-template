@@ -2,6 +2,74 @@
 
 This repository serves as a **template** (skeleton) for developing custom **Lenses** for the Gravitate-Health Federated Open-Source Platform and Services (FOSPS). This project is designed to be **forked** for new lens development.
 
+## Quick Start
+
+### 1. Customize Your Lens
+
+The template includes two files that define your lens:
+
+#### **`my-lens.json`** - FHIR Library Resource Metadata
+
+Update this file with your lens information:
+
+```json
+{
+  "resourceType": "Library",
+  "identifier": [{
+    "system": "http://gravitate-health.lst.tfo.upm.es",
+    "value": "my-lens"  // ← Change to your lens ID
+  }],
+  "version": "1.0.0",        // ← Update version
+  "name": "MyLens",          // ← Change to your lens name (no spaces)
+  "title": "My Warning Lens", // ← Update display title
+  "status": "active",
+  "publisher": "Your Name/Organization",  // ← Update publisher
+  "description": "Description of what your lens does", // ← Update description
+  "purpose": "Why this lens is needed"  // ← Update purpose
+}
+```
+
+#### **`my-lens.js`** - Lens Implementation Code
+
+Implement your lens logic in the `enhance()` function:
+
+```javascript
+function enhance() {
+    // Access available data:
+    // - htmlData: Current section's HTML content (string)
+    // - ipsData: Patient's International Patient Summary (object)
+    // - pvData: Persona Vector with user preferences (object)
+    // - epiData: Full ePI Bundle resource (object)
+    
+    // Transform the HTML content
+    let transformedContent = htmlData;
+    
+    // Example: Add CSS class to highlight content
+    if (ipsData.someCondition) {
+        transformedContent = '<div class="highlight">' + htmlData + '</div>';
+    }
+    
+    return transformedContent;
+}
+```
+
+**Important**: You can rename both files (e.g., `diabetes-lens.json` and `diabetes-lens.js`) as long as they:
+- Share the same **basename** (part before the extension)
+- Are located in the **root directory**
+
+### 2. Testing
+
+The template includes automated tests that validate your lens:
+
+```bash
+npm install  # Install test dependencies (dev only)
+npm test     # Run all tests
+```
+
+**Tests automatically discover and validate ALL lenses** (`.json`/`.js` pairs) in the root directory.
+
+See [`tests/README.md`](tests/README.md) for detailed testing documentation.
+
 ## Core Concepts
 
 The central goal of the G-Lens solution is the **[Focusing Mechanism](https://gravitate-health.github.io/reference/focusing)**, which is defined as adapting electronic Product Information (ePI) to the context of the end user for effective and optimal understanding.
@@ -35,10 +103,20 @@ To begin development, **you must fork this project** into your personal GitHub a
 
 ### Lens Structure and Naming
 
-Lenses should be compliant with the Lens Execution Environment documentation.
+Each lens consists of two files with matching basenames:
 
-1.  **Implementation:** The core logic of the lens must reside within the **`enhance()` function**.
-2.  **File Naming Convention:** Lenses should follow a specific naming convention: `name-lens` (e.g., `diabetes-lens`).
+1.  **`{name}.json`**: FHIR Library resource with metadata (identifier, version, title, description, publisher, etc.)
+2.  **`{name}.js`**: JavaScript implementation with `enhance()` and `explanation()` functions
+
+**File Naming Rules:**
+- Both files must share the same basename (e.g., `diabetes-lens.json` and `diabetes-lens.js`)
+- Files must be located in the root directory of the repository
+- Recommended convention: `{purpose}-lens` (e.g., `pregnancy-lens`, `pediatric-lens`)
+
+**Implementation Requirements:**
+1.  The core lens logic must be in the **`enhance()` function**
+2.  The function must return transformed HTML content (string)
+3.  The lens may only add CSS classes or supplementary content, never remove original text
 
 ### Development Commands
 

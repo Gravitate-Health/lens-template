@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# TypeScript build output
+dist/
+*.js.map
+
+# Test coverage
+coverage/
+# test-outputs/
+tests/test-outputs
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
