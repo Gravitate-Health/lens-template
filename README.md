@@ -99,7 +99,30 @@ Due to legal and regulatory constraints, the core text content of the ePI is hig
 
 ### Forking and Contribution
 
-To begin development, **you must fork this project** into your personal GitHub account.
+To begin development:
+
+1. **Fork this project** into your personal GitHub account
+2. **Rename the repository** to reflect your lens name (e.g., `pregnancy-lens`, `diabetes-lens`)
+3. **Replace this README** with comprehensive documentation using [`LENS_README_TEMPLATE.md`](LENS_README_TEMPLATE.md) as a guide
+
+### Documenting Your Lens
+
+**Proper documentation is critical for lens adoption and trust.** When you fork this template, you should replace this README with documentation specific to your lens.
+
+Use the **[`LENS_README_TEMPLATE.md`](LENS_README_TEMPLATE.md)** file as a starting point. Your lens documentation should include:
+
+- **Lens name and developers** - Who created this lens
+- **Overall operation** - What medical knowledge it encodes
+- **Target subjects** - Who this lens is for (patient populations, conditions)
+- **Purpose and benefits** - How it improves safety and understanding
+- **Usage guidance** - When to use (and not use) this lens
+- **Privacy concerns** - What IPS data is accessed and why
+- **External services** - Any connections to APIs or external systems
+- **Licensing** - How others can use or modify the lens
+- **Testing** - How the lens is validated and test coverage
+- **Clinical evidence** - Supporting research or guidelines
+
+**See [`LENS_README_TEMPLATE.md`](LENS_README_TEMPLATE.md) for a comprehensive documentation template.**
 
 ### Lens Structure and Naming
 
@@ -145,3 +168,78 @@ The structure for the lens resource is defined in the Gravitate Health FHIR Impl
     *   *link:* [Lens Tutorial](https://gravitate-health.github.io/docs/category/tutorial---lens).
 *   **Gravitate-Health GitHub Organization:** Access source code and additional FOSPS modules.
     *   *Link:* https://github.com/Gravitate-Health/
+
+## Lens Development Checklist
+
+When forking this template to create your own lens, follow this checklist:
+
+### 1. Repository Setup
+- [ ] Fork this repository to your account
+- [ ] Rename repository to match your lens (e.g., `pregnancy-lens`)
+- [ ] Update repository description
+
+### 2. Lens Implementation
+- [ ] Rename `my-lens.json` and `my-lens.js` to your lens name
+- [ ] Update FHIR Library metadata in the JSON file:
+  - [ ] Identifier and name
+  - [ ] Version, title, and status
+  - [ ] Publisher and description
+  - [ ] Purpose and jurisdiction
+- [ ] Implement lens logic in the JavaScript file:
+  - [ ] Complete the `enhance()` function
+  - [ ] Complete the `explanation()` function
+  - [ ] Add appropriate CSS classes (`highlight`, `collapse`)
+  - [ ] Access only necessary IPS data
+
+### 3. Testing
+- [ ] Run automated tests: `npm test`
+- [ ] All tests pass without errors
+- [ ] Create custom tests in `tests/lens-custom.test.ts`
+- [ ] Verify highlighting behavior
+- [ ] Verify collapsing behavior
+- [ ] Test with multiple patient scenarios
+- [ ] Test edge cases and error handling
+
+### 4. Documentation (Critical!)
+- [ ] **Replace this README** with lens-specific documentation
+- [ ] Use [`LENS_README_TEMPLATE.md`](LENS_README_TEMPLATE.md) as starting point
+- [ ] Document lens name and developers
+- [ ] Describe target patient populations
+- [ ] Explain purpose and clinical benefits
+- [ ] Detail when to use (and not use) the lens
+- [ ] **Document privacy and data usage**:
+  - [ ] List all IPS data elements accessed
+  - [ ] Explain why each data element is needed
+  - [ ] Disclose any external service connections
+  - [ ] State data retention policy (should be "none")
+- [ ] Specify license
+- [ ] Document testing approach and coverage
+- [ ] Add clinical evidence or guidelines supporting the lens
+
+### 5. Privacy and Compliance
+- [ ] Minimize IPS data access (only what's necessary)
+- [ ] Never store or persist patient data
+- [ ] Document all data usage transparently
+- [ ] If using external services, explain why and ensure security
+- [ ] Comply with GDPR, HIPAA, and local regulations
+
+### 6. Quality Assurance
+- [ ] Code is well-commented
+- [ ] No hardcoded patient data or test data in production code
+- [ ] Error handling is robust
+- [ ] Performance is acceptable (lens executes quickly)
+- [ ] Follows Gravitate Health lens development guidelines
+
+### 7. Publication and Sharing
+- [ ] Create clear GitHub releases with version tags
+- [ ] Add appropriate license file
+- [ ] Consider adding CONTRIBUTING.md for community contributions
+- [ ] Share with Gravitate Health community
+- [ ] Submit to lens registry (if available)
+
+## Support and Community
+
+For questions about lens development:
+- **Template issues**: Open an issue in this repository
+- **Gravitate Health documentation**: [https://gravitate-health.github.io/](https://gravitate-health.github.io/)
+- **Community discussions**: [Gravitate Health GitHub Discussions](https://github.com/orgs/Gravitate-Health/discussions)
