@@ -16,12 +16,14 @@ You can rename `my-lens.{json|js}` to any name (e.g., `diabetes-lens.{json|js}`)
 
 ```
 tests/
-├── fixtures.ts           # Utility functions for loading test resources
-├── lens.test.ts          # Main test suite for lens validation
-├── PePIs/               # Preprocessed ePIs (electronic Product Information)
-│   └── *.json           # PePI Bundle resources
-└── IPS/                 # International Patient Summary resources
-    └── *.json           # IPS Bundle resources
+├── lens.test.ts                    # Automated test suite (validates all lenses)
+├── lens-utils.ts                   # Developer utilities for custom tests
+├── lens-custom.test.example.ts     # Example custom test patterns
+├── fixtures.ts                     # Legacy utility functions
+├── PePIs/                          # Preprocessed ePIs (electronic Product Information)
+│   └── *.json                      # PePI Bundle resources
+└── IPS/                            # International Patient Summary resources
+    └── *.json                      # IPS Bundle resources
 ```
 
 ## Test Data
@@ -98,6 +100,74 @@ All dependencies in `package.json` are **development/testing only**:
 These dependencies are not required for production use of the lens.
 
 **Note**: The tests use the actual `@gravitatehealth/lens-execution-environment` package (version ^0.0.1) to execute lenses in the same way they would run in production. This ensures your lens will work correctly when deployed to the Gravitate Health platform.
+
+## Custom Test Development
+
+### Using the Lens Utilities Module
+
+The `lens-utils.ts` module provides helper functions for writing custom tests specific to your lens behavior. This is useful when you want to verify particular highlighting patterns, collapsed sections, or specific patient scenarios.
+
+#### Available Utility Functions
+
+**Loading Resources:**
+- `loadEPI(filename)` - Load a specific ePI by filename
+- `loadAllEPIs()` - Load all preprocessed ePIs
+- `loadIPS(filename)` - Load a specific IPS by filename  
+- `loadAllIPS()` - Load all IPS resources
+- `loadLens(baseName)` - Load and compile a lens from JSON/JS files
+
+**Applying Lenses:**
+- `applyLens(epi, ips, lens)` - Apply a lens to an ePI + IPS combination
+
+**Verification Functions:**
+- `isTextHighlighted(epi, text, options?)` - Check if text has `highlight` class
+- `isTextCollapsed(epi, text, options?)` - Check if text has `collapse` class
+- `countElementsWithClass(epi, className)` - Count elements with a CSS class
+- `hasFocusingErrors(result)` - Check if lens produced errors
+- `getFocusingErrors(result)` - Get array of error messages
+- `isContentPreserved(originalEPI, enhancedEPI, threshold?)` - Verify content preservation
+
+**Helper Functions:**
+- `extractHTMLFromEPI(bundle)` - Extract all HTML sections from ePI
+- `extractTextContent(html)` - Strip HTML tags to get plain text
+
+### Writing Custom Tests
+
+1. **Copy the example file:**
+   ```bash
+   cp tests/lens-custom.test.example.ts tests/lens-custom.test.ts
+   ```
+
+2. **Customize the tests** for your lens behavior:
+   ```typescript
+   import { loadEPI, loadIPS, loadLens, applyLens, isTextHighlighted } from './lens-utils';
+   
+   describe('My Lens Custom Tests', () => {
+     const myLens = loadLens('my-lens');
+     
+     it('should highlight pregnancy warnings', async () => {
+       const epi = loadEPI('Bundle-processedbundledovato-en.json');
+       const ips = loadIPS('IPS-bundle-01.json');
+       const result = await applyLens(epi, ips, myLens);
+       
+       expect(isTextHighlighted(result.epi, 'pregnancy')).toBe(true);
+     });
+   });
+   ```
+
+3. **Run all tests** (including your custom tests):
+   ```bash
+   npm test
+   ```
+
+### Example Test Scenarios
+
+The `lens-custom.test.example.ts` file demonstrates:
+- Testing highlighting behavior for specific patient conditions
+- Verifying collapsed sections for irrelevant content
+- Checking content preservation across all ePI + IPS combinations
+- Handling specific patient scenarios (pediatric, liver conditions, etc.)
+- Testing error handling and edge cases
 
 ## Adding Test Data
 
