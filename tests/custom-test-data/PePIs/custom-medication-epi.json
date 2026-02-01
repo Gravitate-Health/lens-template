@@ -1,0 +1,84 @@
+{
+  "resourceType": "Bundle",
+  "id": "custom-medication-epi",
+  "type": "document",
+  "entry": [
+    {
+      "fullUrl": "Composition/composition-1",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "composition-1",
+        "type": {
+          "coding": [
+            {
+              "system": "https://gravitatehealth.eu/section-types",
+              "code": "epi",
+              "display": "Electronic Product Information"
+            }
+          ]
+        },
+        "title": "Custom Medication Product Information",
+        "section": [
+          {
+            "title": "Package Leaflet",
+            "code": {
+              "coding": [
+                {
+                  "system": "https://spor.ema.europa.eu/v1/lists/200000029659",
+                  "code": "200000029894"
+                }
+              ]
+            },
+            "section": [
+              {
+                "title": "What Custom Medication is and what it is used for",
+                "code": {
+                  "coding": [
+                    {
+                      "system": "https://spor.ema.europa.eu/v1/lists/200000029659",
+                      "code": "200000029895"
+                    }
+                  ]
+                },
+                "text": {
+                  "status": "additional",
+                  "div": "<div xmlns='http://www.w3.org/1999/xhtml'><h2>What Custom Medication is and what it is used for</h2><p>Custom Medication is used to treat <span class='indication'>diabetes</span> in adults.</p><p>It helps control blood sugar levels.</p></div>"
+                }
+              },
+              {
+                "title": "Do not take Custom Medication",
+                "code": {
+                  "coding": [
+                    {
+                      "system": "https://spor.ema.europa.eu/v1/lists/200000029659",
+                      "code": "200000029896"
+                    }
+                  ]
+                },
+                "text": {
+                  "status": "additional",
+                  "div": "<div xmlns='http://www.w3.org/1999/xhtml'><h2>Do not take Custom Medication if:</h2><ul><li>You are allergic to the active substance or any ingredients</li><li>You are <span class='contraindication'>pregnant or breastfeeding</span></li><li>You have severe kidney problems</li></ul></div>"
+                }
+              },
+              {
+                "title": "Possible side effects",
+                "code": {
+                  "coding": [
+                    {
+                      "system": "https://spor.ema.europa.eu/v1/lists/200000029659",
+                      "code": "200000029897"
+                    }
+                  ]
+                },
+                "text": {
+                  "status": "additional",
+                  "div": "<div xmlns='http://www.w3.org/1999/xhtml'><h2>Possible side effects</h2><p>Common side effects include:</p><ul><li>Headache</li><li>Nausea</li><li>Dizziness</li></ul><p>Rare side effects include:</p><ul><li><span class='serious-effect'>Severe allergic reactions</span></li></ul></div>"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

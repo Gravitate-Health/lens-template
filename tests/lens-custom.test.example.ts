@@ -1,7 +1,7 @@
 /**
  * Example Custom Lens Tests
  * 
- * This file demonstrates how to write custom tests for your lens using the lens-utils module.
+ * This file demonstrates how to write custom tests for your lens using the @gravitate-health/lens-tool-test library.
  * 
  * To use this file:
  * 1. Rename it to `lens-custom.test.ts` (remove `.example`)
@@ -9,10 +9,12 @@
  * 3. Run `npm test` to execute all tests including your custom tests
  */
 
+import * as path from 'path';
 import {
+  configureTestData,
   loadEPI,
   loadIPS,
-  loadLens,
+  loadAllLenses,
   loadAllEPIs,
   loadAllIPS,
   applyLens,
@@ -22,17 +24,26 @@ import {
   hasFocusingErrors,
   getFocusingErrors,
   isContentPreserved
-} from './lens-utils';
+} from '@gravitate-health/lens-tool-test';
+
+// Configure to use custom test data (extends bundled data)
+configureTestData({
+  pepisPath: path.join(__dirname, 'custom-test-data', 'PePIs'),
+  ipsPath: path.join(__dirname, 'custom-test-data', 'IPS')
+});
 
 describe('Custom Lens Behavior Tests', () => {
-  // Load your lens once before all tests
-  const myLens = loadLens('my-lens');
+  // Load all lenses from the project root
+  const lenses = loadAllLenses(path.join(__dirname, '..'));
+  const myLens = lenses[0]; // Use first lens for custom tests
+  // you can select a specific lens if needed
+  // const myLens = loadLens('my-lens'); // Uncomment and replace 'my-lens' with your lens name
 
   describe('Highlighting Behavior', () => {
     it('should highlight pregnancy warnings for pregnant patients', async () => {
-      // Load test data
+      // Load test data - using bundled data
       const epi = loadEPI('Bundle-processedbundledovato-en.json');
-      const ips = loadIPS('IPS-bundle-01.json');
+      const ips = loadIPS('alicia-patient_summary.json');
 
       // Apply lens
       const result = await applyLens(epi, ips, myLens);
@@ -53,7 +64,7 @@ describe('Custom Lens Behavior Tests', () => {
 
     it('should highlight multiple relevant sections', async () => {
       const epi = loadEPI('Bundle-processedbundledovato-en.json');
-      const ips = loadIPS('IPS-bundle-01.json');
+      const ips = loadIPS('alicia-patient_summary.json');
 
       const result = await applyLens(epi, ips, myLens);
 
@@ -67,10 +78,30 @@ describe('Custom Lens Behavior Tests', () => {
     });
   });
 
+  describe('Custom Data Tests', () => {
+    it('should work with custom test data', async () => {
+      // Load custom test data
+      const customEPI = loadEPI('custom-medication-epi.json');
+      const customIPS = loadIPS('custom-patient.json');
+
+      const result = await applyLens(customEPI, customIPS, myLens);
+
+      // Verify no errors
+      expect(hasFocusingErrors(result)).toBe(false);
+
+      // Verify content preservation
+      expect(isContentPreserved(customEPI, result.epi)).toBe(true);
+
+      // You can add custom assertions based on your lens behavior
+      // For example, if your lens highlights diabetes-related content:
+      // expect(isTextHighlighted(result.epi, 'diabetes')).toBe(true);
+    });
+  });
+
   describe('Collapsing Behavior', () => {
     it('should collapse irrelevant sections for male patients', async () => {
       const epi = loadEPI('Bundle-processedbundledovato-en.json');
-      const ips = loadIPS('IPS-bundle-01.json'); // Assuming this is a male patient
+      const ips = loadIPS('pedro-patient_summary.json'); // Assuming this is a male patient
 
       const result = await applyLens(epi, ips, myLens);
 
@@ -103,7 +134,7 @@ describe('Custom Lens Behavior Tests', () => {
   describe('Error Handling', () => {
     it('should not produce focusing errors', async () => {
       const epi = loadEPI('Bundle-processedbundledovato-en.json');
-      const ips = loadIPS('IPS-bundle-01.json');
+      const ips = loadIPS('alicia-patient_summary.json');
 
       const result = await applyLens(epi, ips, myLens);
 
@@ -124,7 +155,7 @@ describe('Custom Lens Behavior Tests', () => {
       
       // Load an IPS for a pediatric patient
       // (You may need to create or use a specific IPS)
-      const ips = loadIPS('IPS-bundle-01.json');
+      const ips = loadIPS('alicia-patient_summary.json');
 
       const result = await applyLens(epi, ips, myLens);
 
@@ -137,7 +168,7 @@ describe('Custom Lens Behavior Tests', () => {
 
     it('should handle patients with liver conditions', async () => {
       const epi = loadEPI('Bundle-processedbundledovato-en.json');
-      const ips = loadIPS('IPS-bundle-01.json');
+      const ips = loadIPS('pedro-patient_summary.json');
 
       const result = await applyLens(epi, ips, myLens);
 
@@ -147,9 +178,13 @@ describe('Custom Lens Behavior Tests', () => {
   });
 
   describe('Multiple Lens Application', () => {
-    it('should work correctly with multiple ePIs', async () => {
+    it('should work correctly with all ePIs (bundled + custom)', async () => {
+      // loadAllEPIs() returns both bundled (7) and custom data
       const epis = loadAllEPIs();
-      const ips = loadIPS('IPS-bundle-01.json');
+      const ips = loadIPS('alicia-patient_summary.json');
+
+      // Should have at least 8 ePIs (7 bundled + 1 custom)
+      expect(epis.length).toBeGreaterThanOrEqual(8);
 
       for (const epi of epis) {
         const result = await applyLens(epi, ips, myLens);
@@ -167,7 +202,7 @@ describe('Custom Lens Behavior Tests', () => {
     it('should handle ePIs with missing sections gracefully', async () => {
       // Test with different ePIs to ensure robustness
       const epis = loadAllEPIs();
-      const ips = loadIPS('IPS-bundle-01.json');
+      const ips = loadIPS('alicia-patient_summary.json');
 
       for (const epi of epis) {
         // Should not throw errors even with unusual ePI structures

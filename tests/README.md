@@ -2,6 +2,8 @@
 
 This directory contains the test infrastructure and test data for validating your Gravitate Health lens.
 
+**Note:** This project now uses the `@gravitate-health/lens-tool-test` library for test utilities. All helper functions are provided by this library, which includes bundled test data and comprehensive testing utilities.
+
 ## Automatic Lens Discovery
 
 **Tests automatically discover and validate ALL lenses in the root directory.** The test suite:
@@ -17,9 +19,7 @@ You can rename `my-lens.{json|js}` to any name (e.g., `diabetes-lens.{json|js}`)
 ```
 tests/
 ├── lens.test.ts                    # Automated test suite (validates all lenses)
-├── lens-utils.ts                   # Developer utilities for custom tests
 ├── lens-custom.test.example.ts     # Example custom test patterns
-├── fixtures.ts                     # Legacy utility functions
 ├── PePIs/                          # Preprocessed ePIs (electronic Product Information)
 │   └── *.json                      # PePI Bundle resources
 └── IPS/                            # International Patient Summary resources
@@ -28,8 +28,62 @@ tests/
 
 ## Test Data
 
+The library provides bundled test data:
+- **7 preprocessed ePIs** with semantic annotations
+- **2 IPS resources** representing different patient profiles
+
+You can extend this with custom test data in `custom-test-data/`:
+- **Custom ePIs**: Add to `custom-test-data/PePIs/`
+- **Custom IPS**: Add to `custom-test-data/IPS/`
+
+See [custom-test-data/README.md](custom-test-data/README.md) for examples and usage.
+
+## Test Utilities Library
+
+This project uses `@gravitate-health/lens-tool-test` which provides:
+- **Bundled Test Data**: 7 preprocessed ePIs and 2 IPS resources
+- **Data Loading**: `loadEPI()`, `loadIPS()`, `loadAllEPIs()`, `loadAllIPS()`
+- **Lens Operations**: `loadLens()`, `applyLens()`, `applyMultipleLenses()`
+- **HTML Analysis**: `isTextHighlighted()`, `isTextCollapsed()`, `countElementsWithClass()`
+- **Validation**: `hasFocusingErrors()`, `isContentPreserved()`, `getContentPreservationMetrics()`
+
+### Using Bundled Data
+
+```typescript
+import { loadEPI, loadIPS, loadAllEPIs } from '@gravitate-health/lens-tool-test';
+
+// Load specific bundled ePI
+const epi = loadEPI('Bundle-processedbundledovato-en.json');
+
+// Load all bundled ePIs (returns 7 ePIs)
+const allEPIs = loadAllEPIs();
+```
+
+### Using Custom Data
+
+```typescript
+import { configureTestData, loadEPI, loadAllEPIs } from '@gravitate-health/lens-tool-test';
+import * as path from 'path';
+
+// Configure custom data directory
+configureTestData({
+  pepisPath: path.join(__dirname, 'custom-test-data', 'PePIs'),
+  ipsPath: path.join(__dirname, 'custom-test-data', 'IPS')
+});
+
+// Load custom ePI
+const customEPI = loadEPI('custom-medication-epi.json');
+
+// Load ALL ePIs (bundled + custom)
+const allEPIs = loadAllEPIs(); // Returns 8+ ePIs (7 bundled + your custom ones)
+```
+
+## Test Data
+
 - **PePIs** (`tests/PePIs/`): Preprocessed electronic Product Information documents with semantic annotations
 - **IPS** (`tests/IPS/`): International Patient Summary resources representing patient clinical status
+
+The tests are configured to use your local test data while also having access to the bundled data from the library.
 
 ## Running Tests
 
@@ -88,6 +142,56 @@ The lens may only:
 - Apply CSS classes (`highlight`, `collapse`) to sections
 - Add supplementary information (links, images, videos, tooltips)
 
+## Writing Custom Tests
+
+You can write custom tests using the utilities from `@gravitate-health/lens-tool-test`:
+
+```typescript
+import {
+  configureTestData,
+  loadEPI,
+  loadIPS,
+  loadLens,
+  applyLens,
+  hasFocusingErrors,
+  isContentPreserved,
+  isTextHighlighted,
+  countElementsWithClass
+} from '@gravitate-health/lens-tool-test';
+import * as path from 'path';
+
+// Configure to use custom test data
+configureTestData({
+  pepisPath: path.join(__dirname, 'custom-test-data', 'PePIs'),
+  ipsPath: path.join(__dirname, 'custom-test-data', 'IPS')
+});
+
+// Test with bundled data
+test('works with bundled data', async () => {
+  const lens = loadLens(path.join(__dirname, '..'), 'my-lens');
+  const epi = loadEPI('Bundle-processedbundledovato-en.json');
+  const ips = loadIPS('alicia-patient_summary.json');
+  
+  const result = await applyLens(epi, ips, lens);
+  
+  expect(hasFocusingErrors(result)).toBe(false);
+  expect(isContentPreserved(epi, result.epi)).toBe(true);
+});
+
+// Test with custom data
+test('works with custom data', async () => {
+  const lens = loadLens(path.join(__dirname, '..'), 'my-lens');
+  const epi = loadEPI('custom-medication-epi.json');
+  const ips = loadIPS('custom-patient.json');
+  
+  const result = await applyLens(epi, ips, lens);
+  
+  expect(hasFocusingErrors(result)).toBe(false);
+});
+```
+
+See [lens-custom.test.example.ts](lens-custom.test.example.ts) for more examples.
+
 ## Dependencies
 
 All dependencies in `package.json` are **development/testing only**:
@@ -96,6 +200,7 @@ All dependencies in `package.json` are **development/testing only**:
 - `typescript` - TypeScript compiler
 - `@types/node` - Node.js type definitions
 - `@types/jest` - Jest type definitions
+- `@gravitate-health/lens-tool-test` - Testing utilities, bundled test data, and lens runtime (includes lens-execution-environment)
 
 These dependencies are not required for production use of the lens.
 
