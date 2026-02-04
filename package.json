@@ -7,10 +7,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "build": "tsc && lens-tool-bundler batch-bundle --exclude tests -f"
+    "build": "lens-tool-bundler batch-bundle --exclude tests"
   },
   "devDependencies": {
-    "@gravitate-health/lens-tool-bundler": "^0.5.4",
+    "@gravitate-health/lens-tool-bundler": "^0.5.5",
     "@gravitate-health/lens-tool-test": "^1.0.1",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.0",

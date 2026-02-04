@@ -7,7 +7,7 @@
   "extension": [
     {
       "url": "http://hl7.eu/fhir/ig/gravitate-health/StructureDefinition/lee-version",
-      "valueString": "0.0.1" 
+      "valueString": "1.1.0" 
     }
   ],
   "identifier": [ 
@@ -19,7 +19,7 @@
   "version": "1.0.0", 
   "name": "MyLens",
   "title": "My Warning Lens", 
-  "status": "active", 
+  "status": "draft", 
   "type": { 
     "coding": [
       {
@@ -30,6 +30,7 @@
   "publisher": "Gravitate Health Team", 
   "description": "This lens highlights sections related to my specific risk/safety, based on a patient's gender and age.", 
   "purpose": "To improve patient safety and understanding of medicinal risks by emphasizing relevant text.", 
+  "usage": "This lens is intended for healthcare professionals and patients to enhance awareness of specific risks associated with medications based on demographic factors.",
   "jurisdiction": [
     {
       "coding": [
@@ -38,5 +39,6 @@
         }
       ]
     }
-  ]
+  ], 
+  "copyright": "© 2024 Gravitate Health. Licensed under Apache 2.0."
 }
