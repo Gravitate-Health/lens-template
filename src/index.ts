@@ -6,8 +6,28 @@
     epi, ips, pv, and html are available as global variables.
 */
 
-// Import utilities if needed
-// import { someFunction } from '@gravitate-health/lens-tool-lib';
+// Import utilities from @gravitate-health/lens-tool-lib as needed:
+//
+// FHIR IPS (International Patient Summary) utilities:
+// import { getPatientInfo, getMedications, getObservationsByCode, getConditions, getAllergies } from '@gravitate-health/lens-tool-lib';
+//
+// FHIR ePI (Electronic Product Information) utilities:
+// import { getAnnotatedSections, findSectionsByCode, getMedicinalProductId, getComposition, getLanguage } from '@gravitate-health/lens-tool-lib';
+//
+// FHIR Persona Vector utilities:
+// import { validatePersonaVector, getAllDimensions, getDimensionByCode } from '@gravitate-health/lens-tool-lib';
+//
+// FHIR Common utilities:
+// import { getResourcesByType, resolveReference, extractCodes, matchCodes } from '@gravitate-health/lens-tool-lib';
+//
+// HTML DOM manipulation utilities:
+// import { addClasses, insertBanner, traverseDOM } from '@gravitate-health/lens-tool-lib';
+//
+// Language/i18n utilities:
+// import { getLangKey, translate } from '@gravitate-health/lens-tool-lib';
+//
+// General utilities:
+// import { deepEqual, arrayContains, uniqueByKey, calculateAge } from '@gravitate-health/lens-tool-lib';
 
 /* 
     Enhance function: Transforms the original content to highlight specific sections.

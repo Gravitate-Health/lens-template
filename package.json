@@ -17,7 +17,9 @@
     "clean": "rm -rf dist",
     "dev": "npm run build:watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@gravitate-health/lens-tool-lib": "^1.0.0"
+  },
   "devDependencies": {
     "@gravitate-health/lens-tool-bundler": "^0.5.7",
     "@gravitate-health/lens-tool-test": "^1.0.2",
