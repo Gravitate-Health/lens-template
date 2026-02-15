@@ -57,6 +57,10 @@ function enhance() {
 - Share the same **basename** (part before the extension)
 - Are located in the **root directory**
 
+**Note on Multiple Lenses**: If you have multiple lens JSON files in your project (e.g., for development or testing), the `npm run bundle` command will automatically bundle the **first lens found** in the root directory. If you need to bundle a specific lens, either:
+- Keep only one lens JSON in the root directory
+- Modify the `bundle` script in `package.json` to specify your target lens file
+
 ### 2. Testing
 
 The template includes automated tests that validate your lens:

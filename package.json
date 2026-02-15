@@ -12,7 +12,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "bundle": "lens-tool-bundler bundle dist/index.js --bundle=my-lens.json -p",
+    "bundle": "lens-tool-bundler bundle dist/index.js --bundle=$(lens-tool-bundler lslens | head -n 1) -p",
     "prebundle": "npm run build:prod",
     "clean": "rm -rf dist",
     "dev": "npm run build:watch"
