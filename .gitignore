@@ -5,6 +5,12 @@ package-lock.json
 # TypeScript build output
 dist/
 *.js.map
+*.d.ts
+*.d.ts.map
+
+# Compiled JavaScript (source is TypeScript)
+# Keep the lens bundler output but ignore compiled sources
+src/**/*.js
 
 # Test coverage
 coverage/

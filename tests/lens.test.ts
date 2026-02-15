@@ -21,9 +21,9 @@ configureTestData({
 
 describe('Lens Integration Tests', () => {
   test('should apply lens to all ePI + IPS combinations without errors', async () => {
-    // Load all lenses from the project root
-    const lenses = loadAllLenses(path.join(__dirname, '..'));
-    
+    // Load all lenses from the project root (skips tsconfig.json)
+    const lenses = loadAllLenses(path.join(__dirname, '..'), false);
+    expect(lenses.length).toBeGreaterThan(0);
     // Run comprehensive tests on all ePI/IPS combinations
     // This tests both bundled library data and custom test data
     const results = await runComprehensiveLensTests(lenses, {

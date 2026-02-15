@@ -1,44 +1,51 @@
-
 {
   "resourceType": "Library",
   "meta": {
-    "profile": [ "http://hl7.eu/fhir/ig/gravitate-health/StructureDefinition/lens" ]
+    "profile": [
+      "http://hl7.eu/fhir/ig/gravitate-health/StructureDefinition/lens"
+    ]
   },
   "extension": [
     {
       "url": "http://hl7.eu/fhir/ig/gravitate-health/StructureDefinition/lee-version",
-      "valueString": "1.1.0" 
+      "valueString": "1.1.0"
     }
   ],
-  "identifier": [ 
+  "identifier": [
     {
       "system": "http://gravitate-health.lst.tfo.upm.es",
-      "value": "my-lens" 
+      "value": "my-lens"
     }
   ],
-  "version": "1.0.0", 
+  "version": "1.0.0",
   "name": "MyLens",
-  "title": "My Warning Lens", 
-  "status": "draft", 
-  "type": { 
+  "title": "My Warning Lens",
+  "status": "draft",
+  "type": {
     "coding": [
       {
-        "code": "logical-library" 
+        "code": "logical-library"
       }
     ]
   },
-  "publisher": "Gravitate Health Team", 
-  "description": "This lens highlights sections related to my specific risk/safety, based on a patient's gender and age.", 
-  "purpose": "To improve patient safety and understanding of medicinal risks by emphasizing relevant text.", 
+  "publisher": "Gravitate Health Team",
+  "description": "This lens highlights sections related to my specific risk/safety, based on a patient's gender and age.",
+  "purpose": "To improve patient safety and understanding of medicinal risks by emphasizing relevant text.",
   "usage": "This lens is intended for healthcare professionals and patients to enhance awareness of specific risks associated with medications based on demographic factors.",
   "jurisdiction": [
     {
       "coding": [
         {
-          "display": "European Union" 
+          "display": "European Union"
         }
       ]
     }
-  ], 
-  "copyright": "© 2024 Gravitate Health. Licensed under Apache 2.0."
+  ],
+  "copyright": "© 2024 Gravitate Health. Licensed under Apache 2.0.",
+  "date": "2026-02-15T01:24:48.327Z",
+  "content": [
+    {
+      "data": "Ly8gR3Jhdml0YXRlIEhlYWx0aCBMZW5zIC0gQ29tcGlsZWQgd2l0aCBlc2J1aWxkCi8vIERvIG5vdCBlZGl0IHRoaXMgZmlsZSBkaXJlY3RseSAtIGVkaXQgdGhlIFR5cGVTY3JpcHQgc291cmNlCgoidXNlIHN0cmljdCI7dmFyIF9fTEVOU19NT0RVTEVfXz0oKCk9Pnt2YXIgaT1PYmplY3QuZGVmaW5lUHJvcGVydHk7dmFyIHM9T2JqZWN0LmdldE93blByb3BlcnR5RGVzY3JpcHRvcjt2YXIgcj1PYmplY3QuZ2V0T3duUHJvcGVydHlOYW1lczt2YXIgYz1PYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5O3ZhciBsPShuLHQpPT57Zm9yKHZhciBhIGluIHQpaShuLGEse2dldDp0W2FdLGVudW1lcmFibGU6ITB9KX0saD0obix0LGEsbyk9PntpZih0JiZ0eXBlb2YgdD09Im9iamVjdCJ8fHR5cGVvZiB0PT0iZnVuY3Rpb24iKWZvcihsZXQgZSBvZiByKHQpKSFjLmNhbGwobixlKSYmZSE9PWEmJmkobixlLHtnZXQ6KCk9PnRbZV0sZW51bWVyYWJsZTohKG89cyh0LGUpKXx8by5lbnVtZXJhYmxlfSk7cmV0dXJuIG59O3ZhciBwPW49PmgoaSh7fSwiX19lc01vZHVsZSIse3ZhbHVlOiEwfSksbik7dmFyIG09e307bChtLHtkZWZhdWx0OigpPT5mfSk7ZnVuY3Rpb24gdSgpe2xldCBuPWVwaSx0PWlwcyxhPXB2O3JldHVybiBodG1sfWZ1bmN0aW9uIHgoKXtyZXR1cm4iVGhpcyBsZW5zIGhpZ2hsaWdodHMgcmVsZXZhbnQgc2VjdGlvbnMgZm9yIHlvdXIgaGVhbHRoIGNvbmRpdGlvbiBiZWNhdXNlLi4uIn12YXIgZj17ZW5oYW5jZTp1LGV4cGxhbmF0aW9uOnh9O3JldHVybiBwKG0pO30pKCk7CgovLyBDb252ZXJ0IG1vZHVsZSBleHBvcnQgdG8gbGVucyByZXR1cm4gZm9ybWF0CnJldHVybiBfX0xFTlNfTU9EVUxFX18uZGVmYXVsdDsK"
+    }
+  ]
 }

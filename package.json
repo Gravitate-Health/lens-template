@@ -1,19 +1,29 @@
 {
   "name": "lens-template-tests",
   "version": "1.0.0",
-  "description": "Test infrastructure for Gravitate Health lens development - All dependencies are for development/testing only",
+  "description": "TypeScript lens template for Gravitate Health - Production code compiled to JavaScript, tests in TypeScript",
   "private": true,
+  "type": "module",
   "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:prod": "NODE_ENV=production node scripts/build.mjs",
+    "build:watch": "node scripts/build.mjs --watch",
+    "pretest": "npm run bundle",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "build": "lens-tool-bundler batch-bundle --exclude tests"
+    "bundle": "lens-tool-bundler bundle dist/index.js --bundle=my-lens.json -p",
+    "prebundle": "npm run build:prod",
+    "clean": "rm -rf dist",
+    "dev": "npm run build:watch"
   },
+  "dependencies": {},
   "devDependencies": {
-    "@gravitate-health/lens-tool-bundler": "^0.5.5",
-    "@gravitate-health/lens-tool-test": "^1.0.1",
+    "@gravitate-health/lens-tool-bundler": "^0.5.7",
+    "@gravitate-health/lens-tool-test": "^1.0.2",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.0",
+    "esbuild": "^0.20.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
@@ -34,7 +44,8 @@
     "fhir",
     "gravitate-health",
     "lens",
-    "testing"
+    "typescript",
+    "esbuild"
   ],
   "author": "Gravitate Health",
   "license": "Apache-2.0"
